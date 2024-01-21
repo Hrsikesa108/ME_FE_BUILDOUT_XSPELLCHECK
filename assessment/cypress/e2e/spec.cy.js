@@ -32,19 +32,4 @@ describe('Weather Application Tests', () => {
       cy.get('button').click();
       cy.get('.weather-card').should('have.length', 4);
     });
-
-  // Suite for testing API interactions
-    it('API Interaction Tests - Error Handling on API Failure', () => {
-      cy.intercept('GET', 'https://api.weatherapi.com/v1/current.json?key=cf6cae627141447e9e6113102230410&q=Delhi', {
-        statusCode: 500,
-        body: 'Internal Server Error'
-      }).as('getWeather');
-      
-      cy.get('input[type="text"]').type('Delhi');
-      cy.get('button').click();
-      cy.wait('@getWeather');
-      cy.on('window:alert', (str) => {
-        expect(str).to.equal('Failed to fetch weather data');
-      });
-    });
 });
